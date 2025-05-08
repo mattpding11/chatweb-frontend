@@ -5,21 +5,19 @@ Guía rápida para clonar, instalar dependencias y arrancar localmente una aplic
 
 ---
 
-## 1. Requisitos previos
-
+**Requisitos previos**  
 | Herramienta | Versión mínima | Notas                                        |
 |-------------|----------------|----------------------------------------------|
 | Node.js     | **18 LTS**     | Comprueba con `node -v`                      |
 | npm         | 9 o superior   | O usa **pnpm** / **yarn** si lo prefieres    |
 | Git         | Cualquiera     | Para clonar el repositorio                   |
 
-
 ---
 
 ## 2. Clonar el repositorio o Descargar
 
 ```bash
-git clone https://github.com/mattpding11/chatweb-frontend
+git clone https://github.com/mattpding11/chatweb-frontend.git
 cd chatweb-frontend
 ```
 
