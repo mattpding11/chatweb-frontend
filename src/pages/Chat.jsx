@@ -23,7 +23,6 @@ const Chat = () => {
   });
   localStorage.setItem("users",JSON.stringify(users));
   sessionStorage.setItem("currentUser",JSON.stringify(currentUser));
-  localStorage.setItem("newMessages", 0);
 
 
   const userList = localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) :  [{ id: 2, username: "example Musk", avatar: "https://i.pravatar.cc/40?img=2" }];

@@ -11,7 +11,7 @@ import React, { useMemo, useState } from 'react';
 const ContactList = ({ currentUser, contacts, active, onSelect }) => {
   
     const [findUser, setUser] = useState('');
-    const newMessages = ""
+    const newMessages = 2
 
     const searchUser = useMemo(() => {
       const query = findUser.trim().toLowerCase();

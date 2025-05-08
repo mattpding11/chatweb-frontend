@@ -20,7 +20,6 @@ const ChatBox = ({socket, currentUser , contact }) => {
   }
 
   const [message, setMessage] = useState('');
-  const [count, setCount] = useState(0);
   const containerRef = useRef(null);
   const [messagesList, setMessagesList] = useLocalStorage("messageData_"+strName[0]+"_"+strName[1], initial)
 
@@ -75,14 +74,12 @@ const ChatBox = ({socket, currentUser , contact }) => {
         ...prev,
         { id: prev.length + 1, from: currentUser.username, fromID:socket.id , to: contact.username,toID: contact.socketId, text: message, },
       ]);
-      setCount(c=>c+1)
+    }else{
+      alert("No se encontro el socket Id, No se pudo enviar el mensaje, recargue ambos chat")
     }
 
     setMessage('');
   }
-
-  console.log("count", count)
- 
 
   return (
     <section className="flex-1 flex flex-col">
@@ -122,7 +119,7 @@ const ChatBox = ({socket, currentUser , contact }) => {
           />
           <button
             className="px-4 py-2 bg-teal-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
-            disabled={!contact.socketId || !message}
+            disabled={!message}
           >
             Enviar
           </button>
