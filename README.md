@@ -14,12 +14,18 @@ Guía rápida para clonar, instalar dependencias y arrancar localmente una aplic
 
 ---
 
-## 2. Clonar el repositorio o Descargar
+## 1. Clonar el repositorio o Descargar
 
 ```bash
 git clone https://github.com/mattpding11/chatweb-frontend.git
 cd chatweb-frontend
 ```
+
+---
+
+## 2. Agregar un archivo llamado ".env" en la raiz de la carpeta y copiar y pegar el contenido del archivo ".env.dev" al nuevo archivo ".env"
+
+---
 
 ## 3. Instalar dependencias y correr app
 ```bash
