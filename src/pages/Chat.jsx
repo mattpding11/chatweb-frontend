@@ -54,7 +54,7 @@ const Chat = () => {
   <div className="h-screen flex">
     <ContactList contacts={contacts} currentUser={currentUser} active={activeContact} onSelect={setActiveContact} />
     {activeContact ? 
-    <ChatBox key={currentUser.id} socket={socket} currentUser={currentUser} contact={activeContact} /> :
+    <ChatBox key={activeContact.id} socket={socket} currentUser={currentUser} contact={activeContact} /> :
     <section className="flex-1 flex items-center justify-center text-gray-400">
     Seleccione un contacto para hablar
   </section>}
@@ -67,11 +67,3 @@ const Chat = () => {
 
 };
 export default Chat;
-
-{/* <div className="flex flex-col items-center justify-center h-screen space-y-4">
-      <ContactList/>
-      <ChatBox/>
-      <h1 className="text-3xl font-bold">Chat</h1>
-      <p className="text-gray-700">{secret}</p>
-      <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded">Logout</button>
-    </div> */}
