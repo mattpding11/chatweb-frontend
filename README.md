@@ -35,3 +35,7 @@ y luego,
 ```bash
 npm run dev
 ```
+
+vista de apis:
+![image](https://github.com/user-attachments/assets/f38737e4-9dde-43ac-bb63-79f65e61be84)
+
