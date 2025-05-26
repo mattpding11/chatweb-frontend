@@ -1,5 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import formatTimestamp from "../hooks/timeFormat";
 
 // eslint-disable-next-line no-unused-vars
 const sampleMessages = [
@@ -14,14 +15,10 @@ const ChatBox = ({socket, currentUser , contact }) => {
   const strName = [currentUser.username, contact.username]
   strName.sort();
 
-  let initial = []
-  if(localStorage.getItem("messageData_"+strName[0]+"_"+strName[1])){
-    initial = JSON.parse(localStorage.getItem("messageData_"+strName[0]+"_"+strName[1]))
-  }
-
   const [message, setMessage] = useState('');
   const containerRef = useRef(null);
-  const [messagesList, setMessagesList] = useLocalStorage("messageData_"+strName[0]+"_"+strName[1], initial)
+  const [messagesList, setMessagesList] = useLocalStorage("messageData_"+strName[0]+"_"+strName[1], []);
+  const [count, setCount] = useState(1);
 
   const c = currentUser;
   c.socketId = socket.id;
@@ -31,7 +28,7 @@ const ChatBox = ({socket, currentUser , contact }) => {
 
     const refreshMessages = (msg) => {
       if(msg.to == currentUser.username || msg.toID == socket.id ){
-        console.log("xxx",msg)
+        console.log("MSG ",msg)
         setMessagesList(JSON.parse(localStorage.getItem("messageData_"+strName[0]+"_"+strName[1])));
       }else{
         return;
@@ -49,6 +46,7 @@ const ChatBox = ({socket, currentUser , contact }) => {
   }, [contact, currentUser, setMessagesList, socket, strName]);
 
 
+
   useLayoutEffect(() => {
     const node = containerRef.current;
     if (!node) return;
@@ -64,22 +62,30 @@ const ChatBox = ({socket, currentUser , contact }) => {
     e.preventDefault()
 
     if (!message.trim()) return;
+    const timestamp = formatTimestamp(Date.now());
 
     // event emit 
     if(contact.socketId) {
       socket.emit("client-message",
-        {from: currentUser.username, fromID:socket.id , to: contact.username, toID: contact.socketId, text: message});
+        {from: currentUser.username, fromID:socket.id , to: contact.username, toID: contact.socketId, text: message, timestamp, newMessages: count});
 
       setMessagesList((prev) => [
         ...prev,
-        { id: prev.length + 1, from: currentUser.username, fromID:socket.id , to: contact.username,toID: contact.socketId, text: message, },
+        { id: prev.length + 1, from: currentUser.username, fromID:socket.id , to: contact.username,toID: contact.socketId, text: message,timestamp, newMessages: count},
       ]);
+      setCount(c => c+1);
     }else{
-      alert("No se encontro el socket Id, No se pudo enviar el mensaje, recargue ambos chat")
+      alert("No se encontro el socket Id, No se pudo enviar el mensaje,  recargue ambos chat")
     }
 
     setMessage('');
   }
+
+  useLayoutEffect(() => {
+    setCount(1);
+  }, [contact]);
+
+  console.log("count", count)
 
   return (
     <section className="flex-1 flex flex-col">
@@ -105,6 +111,11 @@ const ChatBox = ({socket, currentUser , contact }) => {
             >
               {message.text}
             </p>
+            <div>
+              <small className="text-gray-500">
+                {message.timestamp}
+              </small>
+            </div>
           </div>
         ))}
       </main>

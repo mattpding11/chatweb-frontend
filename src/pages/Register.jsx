@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
@@ -7,13 +7,10 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  let numberOfUsersStorage = localStorage.getItem("numberOfUsers") ? parseInt(localStorage.getItem("numberOfUsers")) : 0;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const {data} = await api.post('/auth/register', { username: username.toLocaleLowerCase(), password, avatar: `https://i.pravatar.cc/60?img=${numberOfUsersStorage}` });
-      localStorage.setItem("numberOfUsers", data.numberOfUsers+1 || numberOfUsersStorage+1);
+      await api.post('/auth/register', { username: username.toLocaleLowerCase(), password, avatar: "https://i.pravatar.cc/60?img=" });
       alert('Registrado!');
       navigate('/login');
     } catch (err) {
@@ -35,3 +32,4 @@ const Register = () => {
   );
 };
 export default Register;
+

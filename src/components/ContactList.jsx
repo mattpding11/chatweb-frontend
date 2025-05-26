@@ -9,11 +9,26 @@ import React, { useMemo, useState } from 'react';
 
 
 const ContactList = ({ currentUser, contacts, active, onSelect }) => {
-  
-    const [findUser, setUser] = useState('');
-    const newMessages = 2
+
+      const [findUser, setUser] = useState('');
+      let newMessages = 0;
+      let toThisUser = false;
+
+    if(active){
+      console.log({active})
+      const strName = [currentUser.username, active.username]
+      strName.sort();
+
+      let messagesList = localStorage.getItem("messageData_"+strName[0]+"_"+strName[1]) ? JSON.parse(localStorage.getItem("messageData_"+strName[0]+"_"+strName[1])) : 0;
+      console.log({messagesList})
+      if(messagesList && messagesList.length > 0){
+        newMessages = parseInt(messagesList[messagesList.length-1].newMessages);
+        toThisUser = messagesList[messagesList.length-1].to == currentUser.username ? true: toThisUser; 
+        console.log({newMessages})}
+    }
 
     const searchUser = useMemo(() => {
+      console.log("cambio contact")
       const query = findUser.trim().toLowerCase();
       if (!query) return contacts;
       return contacts.filter(user =>
@@ -56,7 +71,7 @@ const ContactList = ({ currentUser, contacts, active, onSelect }) => {
               <img src={user.avatar} alt="asds" className="w-10 h-10 rounded-full" />
               <div>
                 <p className="font-medium">{user.username || "user"} </p>
-                <span className="text-xs text-green-700"> {newMessages || 1} Mensaje nuevos</span>
+                <span className="text-xs text-green-700"> {toThisUser ? newMessages : 0} Mensaje nuevos</span>
               </div>
             </button>
           ))}

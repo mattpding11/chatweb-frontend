@@ -6,6 +6,8 @@ import ChatBox from '../components/ChatBox';
 import useSocket from '../hooks/useSocket';
 
 const Chat = () => {
+
+  console.log("USER NEWW")
   
   const socket = useSocket();
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const Chat = () => {
     if(user.username == currentUser.username){
       users[index].socketId = socket.id;
       currentUser.socketId = socket.id
+      return;
     }
   });
   localStorage.setItem("users",JSON.stringify(users));
