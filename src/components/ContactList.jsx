@@ -33,7 +33,7 @@ const ContactList = ({ currentUser, contacts, active, onSelect }) => {
       if (!query) return contacts;
       return contacts.filter(user =>
         user.username.toLowerCase().includes(query)
-      );
+      );  
     }, [contacts, findUser]);
 
   
